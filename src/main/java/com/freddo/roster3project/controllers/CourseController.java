@@ -24,22 +24,22 @@ public class CourseController {
 		this.courseService = courseService;
 	}
 
-	@RequestMapping("/courses/new")
+	@RequestMapping("/classes/new")
 	public String newBook(@ModelAttribute("course") Course course) {
 		return "/courses/newcourse.jsp";
 	}
 
-	@RequestMapping(value="/courses", method=RequestMethod.POST)
+	@RequestMapping(value="/classes", method=RequestMethod.POST)
 	public String create(@Valid @ModelAttribute("course") Course course, BindingResult result) {
 		if (result.hasErrors()) {
-			return "courses/newcourse.jsp";
+			return "classes/newcourse.jsp";
 		} else {
 			courseService.createCourse(course);
-			return "redirect:/courses/new";
+			return "redirect:/classes/new";
 		}
 	}
 	
-	@RequestMapping("/courses/{courseid}")
+	@RequestMapping("/classes/{courseid}")
 	public String showstudent( @PathVariable("courseid") Long id, Model model) {
 		Course course = courseService.findCourse(id);
 		model.addAttribute("course", course);
@@ -47,6 +47,6 @@ public class CourseController {
 		List<Student> enrolledStudents = course.getStudents();
 		model.addAttribute("enrolledStudents", enrolledStudents);		
 		
-		return "/courses/showcourse.jsp";
+		return "/classes/showcourse.jsp";
 	}	
 }
